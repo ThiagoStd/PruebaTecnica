@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PruebaTecnicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="comercios">
+          <Key>
+            <PropertyRef Name="id_comercio" />
+          </Key>
+          <Property Name="id_comercio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comercio_codigo" Type="int" Nullable="false" />
+          <Property Name="comercio_nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="comercio_nit" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="comercio_direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estados">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado_codigo" Type="smallint" Nullable="false" />
+          <Property Name="estado_nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="medios_pago">
+          <Key>
+            <PropertyRef Name="id_pago" />
+          </Key>
+          <Property Name="id_pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pago_codigo" Type="smallint" Nullable="false" />
+          <Property Name="pago_nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="transacciones">
+          <Key>
+            <PropertyRef Name="id_trans" />
+          </Key>
+          <Property Name="id_trans" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="trans_codigo" Type="int" Nullable="false" />
+          <Property Name="trans_medio_pago" Type="int" Nullable="false" />
+          <Property Name="trans_estado" Type="int" Nullable="false" />
+          <Property Name="trans_comercio" Type="int" Nullable="false" />
+          <Property Name="trans_usuario" Type="int" Nullable="false" />
+          <Property Name="trans_total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="trans_fecha" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="id_Usuario" />
+          </Key>
+          <Property Name="id_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario_identificacion" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="usuario_nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="usuario_clave" Type="nvarchar" MaxLength="75" Nullable="false" />
+          <Property Name="usuario_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_comercio">
+          <End Role="comercios" Type="Self.comercios" Multiplicity="1" />
+          <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comercios">
+              <PropertyRef Name="id_comercio" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="trans_comercio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_estado">
+          <End Role="estados" Type="Self.estados" Multiplicity="1" />
+          <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="trans_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mediopago">
+          <End Role="medios_pago" Type="Self.medios_pago" Multiplicity="1" />
+          <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medios_pago">
+              <PropertyRef Name="id_pago" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="trans_medio_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="id_Usuario" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="trans_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaTecnicaModelStoreContainer">
+          <EntitySet Name="comercios" EntityType="Self.comercios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estados" EntityType="Self.estados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="medios_pago" EntityType="Self.medios_pago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transacciones" EntityType="Self.transacciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_comercio" Association="Self.FK_comercio">
+            <End Role="comercios" EntitySet="comercios" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_estado" Association="Self.FK_estado">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mediopago" Association="Self.FK_mediopago">
+            <End Role="medios_pago" EntitySet="medios_pago" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario" Association="Self.FK_usuario">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PruebaTecnicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="comercio">
+          <Key>
+            <PropertyRef Name="id_comercio" />
+          </Key>
+          <Property Name="id_comercio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comercio_codigo" Type="Int32" Nullable="false" />
+          <Property Name="comercio_nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="comercio_nit" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="comercio_direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="transacciones" Relationship="Self.FK_comercio" FromRole="comercios" ToRole="transacciones" />
+        </EntityType>
+        <EntityType Name="estado">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado_codigo" Type="Int16" Nullable="false" />
+          <Property Name="estado_nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="transacciones" Relationship="Self.FK_estado" FromRole="estados" ToRole="transacciones" />
+        </EntityType>
+        <EntityType Name="medios_pago">
+          <Key>
+            <PropertyRef Name="id_pago" />
+          </Key>
+          <Property Name="id_pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pago_codigo" Type="Int16" Nullable="false" />
+          <Property Name="pago_nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="transacciones" Relationship="Self.FK_mediopago" FromRole="medios_pago" ToRole="transacciones" />
+        </EntityType>
+        <EntityType Name="transaccion">
+          <Key>
+            <PropertyRef Name="id_trans" />
+          </Key>
+          <Property Name="id_trans" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="trans_codigo" Type="Int32" Nullable="false" />
+          <Property Name="trans_medio_pago" Type="Int32" Nullable="false" />
+          <Property Name="trans_estado" Type="Int32" Nullable="false" />
+          <Property Name="trans_comercio" Type="Int32" Nullable="false" />
+          <Property Name="trans_usuario" Type="Int32" Nullable="false" />
+          <Property Name="trans_total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="trans_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="comercio" Relationship="Self.FK_comercio" FromRole="transacciones" ToRole="comercios" />
+          <NavigationProperty Name="estado" Relationship="Self.FK_estado" FromRole="transacciones" ToRole="estados" />
+          <NavigationProperty Name="medios_pago" Relationship="Self.FK_mediopago" FromRole="transacciones" ToRole="medios_pago" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_usuario" FromRole="transacciones" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_Usuario" />
+          </Key>
+          <Property Name="id_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario_identificacion" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usuario_nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usuario_clave" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usuario_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="transacciones" Relationship="Self.FK_usuario" FromRole="usuarios" ToRole="transacciones" />
+        </EntityType>
+        <Association Name="FK_comercio">
+          <End Role="comercios" Type="Self.comercio" Multiplicity="1" />
+          <End Role="transacciones" Type="PruebaTecnicaModel.transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comercios">
+              <PropertyRef Name="id_comercio" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="trans_comercio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_estado">
+          <End Role="estados" Type="Self.estado" Multiplicity="1" />
+          <End Role="transacciones" Type="PruebaTecnicaModel.transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="trans_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mediopago">
+          <End Role="medios_pago" Type="Self.medios_pago" Multiplicity="1" />
+          <End Role="transacciones" Type="PruebaTecnicaModel.transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medios_pago">
+              <PropertyRef Name="id_pago" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="trans_medio_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario">
+          <End Role="usuarios" Type="Self.usuario" Multiplicity="1" />
+          <End Role="transacciones" Type="PruebaTecnicaModel.transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="id_Usuario" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="trans_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaTecnicaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="comercios" EntityType="Self.comercio" />
+          <EntitySet Name="estados" EntityType="Self.estado" />
+          <EntitySet Name="medios_pago" EntityType="Self.medios_pago" />
+          <EntitySet Name="transacciones" EntityType="PruebaTecnicaModel.transaccion" />
+          <EntitySet Name="usuarios" EntityType="Self.usuario" />
+          <AssociationSet Name="FK_comercio" Association="Self.FK_comercio">
+            <End Role="comercios" EntitySet="comercios" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_estado" Association="Self.FK_estado">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mediopago" Association="Self.FK_mediopago">
+            <End Role="medios_pago" EntitySet="medios_pago" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario" Association="Self.FK_usuario">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PruebaTecnicaModelStoreContainer" CdmEntityContainer="PruebaTecnicaEntities">
+          <EntitySetMapping Name="comercios">
+            <EntityTypeMapping TypeName="PruebaTecnicaModel.comercio">
+              <MappingFragment StoreEntitySet="comercios">
+                <ScalarProperty Name="id_comercio" ColumnName="id_comercio" />
+                <ScalarProperty Name="comercio_codigo" ColumnName="comercio_codigo" />
+                <ScalarProperty Name="comercio_nombre" ColumnName="comercio_nombre" />
+                <ScalarProperty Name="comercio_nit" ColumnName="comercio_nit" />
+                <ScalarProperty Name="comercio_direccion" ColumnName="comercio_direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estados">
+            <EntityTypeMapping TypeName="PruebaTecnicaModel.estado">
+              <MappingFragment StoreEntitySet="estados">
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+                <ScalarProperty Name="estado_codigo" ColumnName="estado_codigo" />
+                <ScalarProperty Name="estado_nombre" ColumnName="estado_nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medios_pago">
+            <EntityTypeMapping TypeName="PruebaTecnicaModel.medios_pago">
+              <MappingFragment StoreEntitySet="medios_pago">
+                <ScalarProperty Name="id_pago" ColumnName="id_pago" />
+                <ScalarProperty Name="pago_codigo" ColumnName="pago_codigo" />
+                <ScalarProperty Name="pago_nombre" ColumnName="pago_nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transacciones">
+            <EntityTypeMapping TypeName="PruebaTecnicaModel.transaccion">
+              <MappingFragment StoreEntitySet="transacciones">
+                <ScalarProperty Name="id_trans" ColumnName="id_trans" />
+                <ScalarProperty Name="trans_codigo" ColumnName="trans_codigo" />
+                <ScalarProperty Name="trans_medio_pago" ColumnName="trans_medio_pago" />
+                <ScalarProperty Name="trans_estado" ColumnName="trans_estado" />
+                <ScalarProperty Name="trans_comercio" ColumnName="trans_comercio" />
+                <ScalarProperty Name="trans_usuario" ColumnName="trans_usuario" />
+                <ScalarProperty Name="trans_total" ColumnName="trans_total" />
+                <ScalarProperty Name="trans_fecha" ColumnName="trans_fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="PruebaTecnicaModel.usuario">
+              <MappingFragment StoreEntitySet="usuarios">
+                <ScalarProperty Name="id_Usuario" ColumnName="id_Usuario" />
+                <ScalarProperty Name="usuario_identificacion" ColumnName="usuario_identificacion" />
+                <ScalarProperty Name="usuario_nombre" ColumnName="usuario_nombre" />
+                <ScalarProperty Name="usuario_clave" ColumnName="usuario_clave" />
+                <ScalarProperty Name="usuario_email" ColumnName="usuario_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -65,11 +65,17 @@
     <Compile Include="estado.cs">
       <DependentUpon>PruebaTecnicaDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmComercioRegistro.cs">
+    <Compile Include="Formularios\frmComercioPago.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmComercioRegistro.Designer.cs">
-      <DependentUpon>frmComercioRegistro.cs</DependentUpon>
+    <Compile Include="Formularios\frmComercioPago.Designer.cs">
+      <DependentUpon>frmComercioPago.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmComerciosRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmComerciosRegistro.Designer.cs">
+      <DependentUpon>frmComerciosRegistro.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\frmInicial.cs">
       <SubType>Form</SubType>
@@ -82,6 +88,12 @@
     </Compile>
     <Compile Include="Formularios\frmIniciarSesion.Designer.cs">
       <DependentUpon>frmIniciarSesion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmUsuarioPago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmUsuarioPago.Designer.cs">
+      <DependentUpon>frmUsuarioPago.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\frmUsuarioRegistro.cs">
       <SubType>Form</SubType>
@@ -115,11 +127,20 @@
     <Compile Include="usuario.cs">
       <DependentUpon>PruebaTecnicaDBModel.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Formularios\frmComercioPago.resx">
+      <DependentUpon>frmComercioPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmComerciosRegistro.resx">
+      <DependentUpon>frmComerciosRegistro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmInicial.resx">
       <DependentUpon>frmInicial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmIniciarSesion.resx">
       <DependentUpon>frmIniciarSesion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmUsuarioPago.resx">
+      <DependentUpon>frmUsuarioPago.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmUsuarioRegistro.resx">
       <DependentUpon>frmUsuarioRegistro.cs</DependentUpon>

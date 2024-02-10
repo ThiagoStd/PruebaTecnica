@@ -36,16 +36,18 @@
             // 
             // btnCargar
             // 
+            this.btnCargar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCargar.Location = new System.Drawing.Point(302, 208);
             this.btnCargar.Name = "btnCargar";
             this.btnCargar.Size = new System.Drawing.Size(209, 64);
-            this.btnCargar.TabIndex = 0;
-            this.btnCargar.Text = "Cargar Información";
+            this.btnCargar.TabIndex = 2;
+            this.btnCargar.Text = "Cargar Información a BD";
             this.btnCargar.UseVisualStyleBackColor = true;
             this.btnCargar.Click += new System.EventHandler(this.btnCargar_Click);
             // 
             // btnSesion
             // 
+            this.btnSesion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSesion.Location = new System.Drawing.Point(302, 119);
             this.btnSesion.Name = "btnSesion";
             this.btnSesion.Size = new System.Drawing.Size(209, 64);

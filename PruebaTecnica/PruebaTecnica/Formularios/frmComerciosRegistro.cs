@@ -5,28 +5,35 @@ using System.Data;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static PruebaTecnica.Variables;
 namespace PruebaTecnica.Formularios
 {
-
-    public partial class frmUsuarioRegistro : Form
+    public partial class frmComerciosRegistro : Form
     {
-        public usuario existeUsuario;
-        public frmUsuarioRegistro()
+        public comercio existeComercio;
+        public frmComerciosRegistro()
         {
             InitializeComponent();
         }
 
         #region Eventos
-        private void frmUsuarioRegistro_Load(object sender, EventArgs e)
+        private void frmComerciosRegistro_Load(object sender, EventArgs e)
         {
-            if (existeUsuario != null)
+            if (existeComercio != null)
             {
-                cargarUsuarioRegistrado();
+                cargarComercioRegistrado();
+            }
+        }
+
+        private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+             
+                e.Handled = true;
             }
         }
         #endregion
@@ -34,7 +41,7 @@ namespace PruebaTecnica.Formularios
         #region Botones
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            if (existeUsuario != null)
+            if (existeComercio != null)
             {
                 actualizarContra();
 
@@ -55,9 +62,9 @@ namespace PruebaTecnica.Formularios
         {
             try
             {
-                if (txtUsuario.Text == "")
+                if (txtCodigo.Text == "")
                 {
- ;                   throw new Exception("La identificación esta vacia");
+                    ; throw new Exception("El código esta vacio");
                 }
 
                 if (txtNombre.Text == "")
@@ -65,29 +72,34 @@ namespace PruebaTecnica.Formularios
                     ; throw new Exception("El nombre esta vacio");
                 }
 
+                if (txtNit.Text == "")
+                {
+                    ; throw new Exception("El Nit esta vacio");
+                }
+
                 if (txtContra.Text == "")
                 {
                     ; throw new Exception("La contraseña esta vacia");
                 }
 
-                if (txtCorreo.Text == "")
+                if (txtdireccion.Text == "")
                 {
-                    ; throw new Exception("El correo esta vacio");
+                    ; throw new Exception("la dirección esta vacia");
                 }
 
-                // Se verifica si ya existe el usuario
-                var usuarioidentificacion = txtUsuario.Text;
-                usuario existeUsuario = _bd.usuarios.FirstOrDefault(x => x.usuario_identificacion == usuarioidentificacion);
+                // Se verifica si ya existe el comercio
+                int comercioCodigo = Convert.ToInt32(txtCodigo.Text);
+                comercio existeComercio = _bd.comercios.FirstOrDefault(x => x.comercio_codigo == comercioCodigo);
 
-                if (existeUsuario == null)
+                if (existeComercio == null)
                 {
-                    guardarUsuario();
+                    guardarComercio();
                 }
                 else
                 {
-                    MessageBox.Show($"El usuario ya existe en la base datos. ", "info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"El Comercio ya existe en la base datos. ", "info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -96,26 +108,27 @@ namespace PruebaTecnica.Formularios
         }
 
         /// <summary>
-        /// Guardar la información del usuario
+        /// Guardar la información del comercio
         /// </summary>
-        private void guardarUsuario()
+        private void guardarComercio()
         {
             try
             {
                 string ClaveHasehada = ObtenerHash(txtContra.Text);
-                usuario infoUsuario = new usuario
+                comercio infoComercio = new comercio
                 {
-                    usuario_identificacion = txtUsuario.Text,
-                    usuario_nombre = txtNombre.Text,
-                    usuario_clave = ClaveHasehada,
-                    usuario_email = txtCorreo.Text
+                    comercio_codigo = Convert.ToInt32(txtCodigo.Text),
+                    comercio_nombre = txtNombre.Text,
+                    comercio_clave = ClaveHasehada,
+                    comercio_nit = txtNit.Text,
+                    comercio_direccion = txtdireccion.Text
                 };
-                _bd.usuarios.Add(infoUsuario);
+                _bd.comercios.Add(infoComercio);
                 _bd.SaveChanges();
-                MessageBox.Show("Usuario creado con exito", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Comercio creado correctamente", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 var frmInicio = new frmIniciarSesion();
-                frmInicio.usuario = txtUsuario.Text;
-                frmInicio.tipo = "Pagador";
+                frmInicio.usuario = txtCodigo.Text;
+                frmInicio.tipo = "Comercio";
                 frmInicio.ShowDialog();
                 this.Close();
 
@@ -124,13 +137,13 @@ namespace PruebaTecnica.Formularios
             {
                 MessageBox.Show($"Error al guardar los datos: {ex.Message}. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         /// <summary>
-        /// Carga la información del usuario encontrado
+        /// Carga la información del comercio encontrado
         /// </summary>
-        private void cargarUsuarioRegistrado()
+        private void cargarComercioRegistrado()
         {
             try
             {
@@ -138,39 +151,41 @@ namespace PruebaTecnica.Formularios
                 lblTitulo.Text = "Crear Contraseña";
                 btnCrear.Text = "Registar Contraseña";
 
-                txtUsuario.Text = existeUsuario.usuario_identificacion;
-                txtNombre.Text = existeUsuario.usuario_nombre;
-                txtCorreo.Text = existeUsuario.usuario_email;
+                txtCodigo.Text = existeComercio.comercio_codigo.ToString();
+                txtNombre.Text = existeComercio.comercio_nombre;
+                txtNit.Text = existeComercio.comercio_nit;
+                txtdireccion.Text = existeComercio.comercio_direccion;
 
-                txtUsuario.Enabled = false;
+                txtCodigo.Enabled = false;
                 txtNombre.Enabled = false;
-                txtCorreo.Enabled = false;
+                txtNit.Enabled = false;
+                txtdireccion.Enabled = false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar el usuario: {ex.Message}. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar el comercio: {ex.Message}. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-          
+
         }
-        
+
         /// <summary>
-        /// Actualiza la contraseña del usuario
+        /// Actualiza la contraseña del comercio
         /// </summary>
         private void actualizarContra()
         {
             try
             {
-                if (txtContra.Text != "") {
-
+                if (txtContra.Text != "")
+                {
                     string ClaveHasehada = ObtenerHash(txtContra.Text);
-                    existeUsuario.usuario_clave = ClaveHasehada;
-                    _bd.Entry(existeUsuario).State = EntityState.Modified;
+                    existeComercio.comercio_clave = ClaveHasehada;
+                    _bd.Entry(existeComercio).State = EntityState.Modified;
                     _bd.SaveChanges();
                     MessageBox.Show("Contraseña actualizada correctamente", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     var frmInicio = new frmIniciarSesion();
-                    frmInicio.usuario = existeUsuario.usuario_identificacion.ToString();
-                    frmInicio.tipo = "Pagador";
+                    frmInicio.usuario = existeComercio.comercio_codigo.ToString();
+                    frmInicio.tipo = "Comercio";
                     frmInicio.ShowDialog();
                     this.Close();
 
@@ -179,7 +194,7 @@ namespace PruebaTecnica.Formularios
                 {
                     MessageBox.Show("La contraseña no puede estar vacia ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-              
+
             }
             catch (Exception ex)
             {
@@ -187,7 +202,12 @@ namespace PruebaTecnica.Formularios
             }
         }
 
+
         #endregion
 
+        
     }
+
+
+
 }

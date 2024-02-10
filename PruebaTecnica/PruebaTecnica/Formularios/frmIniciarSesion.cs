@@ -23,9 +23,9 @@ namespace PruebaTecnica.Formularios
 
         private void frmIniciarSesion_Load(object sender, EventArgs e)
         {
-            if (usuario != "")
+            if (tipo != "")
             {
-                switch (usuario)
+                switch (tipo)
                 {
                     case "Pagador":
                         rbPagador.Checked = true;
@@ -46,7 +46,7 @@ namespace PruebaTecnica.Formularios
 
         private void rbComercio_CheckedChanged(object sender, EventArgs e)
         {
-            lblUser.Text = "NIT";
+            lblUser.Text = "Codigo";
         }
 
         #endregion
@@ -60,8 +60,19 @@ namespace PruebaTecnica.Formularios
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            var frmUsuario = new frmUsuarioRegistro();
-            frmUsuario.ShowDialog();
+            if (rbPagador.Checked)
+            {
+                var frmUsuario = new frmUsuarioRegistro();
+                frmUsuario.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                var frmComercio = new frmComerciosRegistro();
+                frmComercio.ShowDialog();
+                this.Close();
+            }
+            
         }
 
         #endregion
@@ -100,18 +111,34 @@ namespace PruebaTecnica.Formularios
                                 this.Close();
                             }
                         }
+                        else
+                        {
+                            string ClaveHasehada = ObtenerHash(txtContra.Text);
+                            if (ClaveHasehada == existeUsuario.usuario_clave)
+                            {
+                                MessageBox.Show("Bienvenido");
+                                _user = existeUsuario.id_Usuario;
+                                var frmPagoUsuario = new frmUsuarioPago();
+                                frmPagoUsuario.ShowDialog();
+                                
+                            }
+                            else
+                            {
+                                MessageBox.Show("Contraseña Incorrecta", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
                     }
                 }
                 else if (rbComercio.Checked)
                 {
-
-                    comercio existeComercio = _bd.comercios.FirstOrDefault(x => x.comercio_nit == usuario);
+                    int ComercioCodigo = Convert.ToInt32(txtUsuario.Text);
+                    comercio existeComercio = _bd.comercios.FirstOrDefault(x => x.comercio_codigo == ComercioCodigo);
 
                     if (existeComercio == null)
                     {
                         if (MessageBox.Show("El comercio no existe desea registrarlo?", "Info", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            var frmComercio = new frmComercioRegistro();
+                            var frmComercio = new frmComerciosRegistro();
                             frmComercio.ShowDialog();
                             this.Close();
                         }
@@ -122,10 +149,26 @@ namespace PruebaTecnica.Formularios
                         {
                             if (MessageBox.Show("El comercio se encuentra registrado pero sin contraseña. Desea crearla?", "Info", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                var frmComercio = new frmComercioRegistro();
+                                var frmComercio = new frmComerciosRegistro();
                                 frmComercio.existeComercio = existeComercio;
                                 frmComercio.ShowDialog();
                                 this.Close();
+                            }
+                        }
+                        else
+                        {
+                            string ClaveHasehada = ObtenerHash(txtContra.Text);
+                            if (ClaveHasehada == existeComercio.comercio_clave)
+                            {
+
+                                MessageBox.Show("Bienvenido");
+                                _user = existeComercio.id_comercio;
+                                var frmPagoComercio = new frmComercioPago();
+                                frmPagoComercio.ShowDialog();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Contraseña Incorrecta", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
                     }

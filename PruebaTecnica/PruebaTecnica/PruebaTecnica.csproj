@@ -65,11 +65,29 @@
     <Compile Include="estado.cs">
       <DependentUpon>PruebaTecnicaDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\frmComercioRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmComercioRegistro.Designer.cs">
+      <DependentUpon>frmComercioRegistro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\frmInicial.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmInicial.Designer.cs">
       <DependentUpon>frmInicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmIniciarSesion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmIniciarSesion.Designer.cs">
+      <DependentUpon>frmIniciarSesion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmUsuarioRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmUsuarioRegistro.Designer.cs">
+      <DependentUpon>frmUsuarioRegistro.cs</DependentUpon>
     </Compile>
     <Compile Include="medios_pago.cs">
       <DependentUpon>PruebaTecnicaDBModel.tt</DependentUpon>
@@ -99,6 +117,12 @@
     </Compile>
     <EmbeddedResource Include="Formularios\frmInicial.resx">
       <DependentUpon>frmInicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmIniciarSesion.resx">
+      <DependentUpon>frmIniciarSesion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmUsuarioRegistro.resx">
+      <DependentUpon>frmUsuarioRegistro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -131,19 +155,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="PruebaTecnicaDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PruebaTecnicaDBModel.Context.cs</LastGenOutput>
       <DependentUpon>PruebaTecnicaDBModel.edmx</DependentUpon>
+      <LastGenOutput>PruebaTecnicaDBModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="PruebaTecnicaDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PruebaTecnicaDBModel.edmx</DependentUpon>
       <LastGenOutput>PruebaTecnicaDBModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

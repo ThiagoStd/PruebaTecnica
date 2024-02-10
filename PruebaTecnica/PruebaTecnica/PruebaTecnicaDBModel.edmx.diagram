@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ec0778f8e611469ebe94f32c72960209" Name="Diagram1">
+      <Diagram DiagramId="6a95e6401c5f41f1b6df7bf14c3d30a3" Name="Diagram1">
         <EntityTypeShape EntityType="PruebaTecnicaModel.comercio" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PruebaTecnicaModel.estado" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PruebaTecnicaModel.medios_pago" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaTecnicaModel.medios_pago" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PruebaTecnicaModel.transaccion" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="PruebaTecnicaModel.usuario" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaTecnicaModel.usuario" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
         <AssociationConnector Association="PruebaTecnicaModel.FK_comercio" ManuallyRouted="false" />
         <AssociationConnector Association="PruebaTecnicaModel.FK_estado" ManuallyRouted="false" />
         <AssociationConnector Association="PruebaTecnicaModel.FK_mediopago" ManuallyRouted="false" />

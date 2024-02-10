@@ -21,7 +21,7 @@ namespace PruebaTecnica
         }
     
         public int id_estado { get; set; }
-        public short estado_codigo { get; set; }
+        public Nullable<short> estado_codigo { get; set; }
         public string estado_nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

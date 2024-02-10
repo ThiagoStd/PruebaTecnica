@@ -11,5 +11,7 @@ namespace PruebaTecnica
 
         public static PruebaTecnicaEntities _bd = new PruebaTecnicaEntities();
         public string _user = "";
+        public static string _apiUrl = "http://pbiz.zonavirtual.com/api/Prueba/Consulta";
+
     }
 }

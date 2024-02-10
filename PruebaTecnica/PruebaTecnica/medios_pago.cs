@@ -21,7 +21,7 @@ namespace PruebaTecnica
         }
     
         public int id_pago { get; set; }
-        public short pago_codigo { get; set; }
+        public Nullable<short> pago_codigo { get; set; }
         public string pago_nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

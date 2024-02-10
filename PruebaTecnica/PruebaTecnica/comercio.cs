@@ -21,10 +21,11 @@ namespace PruebaTecnica
         }
     
         public int id_comercio { get; set; }
-        public int comercio_codigo { get; set; }
+        public Nullable<int> comercio_codigo { get; set; }
         public string comercio_nombre { get; set; }
         public string comercio_nit { get; set; }
         public string comercio_direccion { get; set; }
+        public string comercio_clave { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<transaccion> transacciones { get; set; }

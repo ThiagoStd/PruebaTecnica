@@ -4,58 +4,60 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PruebaTecnicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PruebaTecnicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="comercios">
           <Key>
             <PropertyRef Name="id_comercio" />
           </Key>
           <Property Name="id_comercio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="comercio_codigo" Type="int" Nullable="false" />
-          <Property Name="comercio_nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="comercio_nit" Type="nvarchar" MaxLength="12" Nullable="false" />
-          <Property Name="comercio_direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="comercio_codigo" Type="int" />
+          <Property Name="comercio_nombre" Type="varchar" MaxLength="200" />
+          <Property Name="comercio_nit" Type="varchar" MaxLength="200" />
+          <Property Name="comercio_clave" Type="varchar" MaxLength="200" />
+          <Property Name="comercio_direccion" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="estados">
           <Key>
             <PropertyRef Name="id_estado" />
           </Key>
           <Property Name="id_estado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="estado_codigo" Type="smallint" Nullable="false" />
-          <Property Name="estado_nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="estado_codigo" Type="smallint" />
+          <Property Name="estado_nombre" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="medios_pago">
           <Key>
             <PropertyRef Name="id_pago" />
           </Key>
           <Property Name="id_pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="pago_codigo" Type="smallint" Nullable="false" />
-          <Property Name="pago_nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="pago_codigo" Type="smallint" />
+          <Property Name="pago_nombre" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="transacciones">
           <Key>
             <PropertyRef Name="id_trans" />
           </Key>
           <Property Name="id_trans" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="trans_codigo" Type="int" Nullable="false" />
-          <Property Name="trans_medio_pago" Type="int" Nullable="false" />
-          <Property Name="trans_estado" Type="int" Nullable="false" />
-          <Property Name="trans_comercio" Type="int" Nullable="false" />
-          <Property Name="trans_usuario" Type="int" Nullable="false" />
-          <Property Name="trans_total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="trans_fecha" Type="datetime" Nullable="false" />
+          <Property Name="trans_codigo" Type="int" />
+          <Property Name="trans_medio_pago" Type="int" />
+          <Property Name="trans_estado" Type="int" />
+          <Property Name="trans_comercio" Type="int" />
+          <Property Name="trans_usuario" Type="int" />
+          <Property Name="trans_total" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="trans_fecha" Type="varchar" MaxLength="100" />
+          <Property Name="trans_concepto" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="usuarios">
           <Key>
             <PropertyRef Name="id_Usuario" />
           </Key>
           <Property Name="id_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="usuario_identificacion" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="usuario_nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="usuario_clave" Type="nvarchar" MaxLength="75" Nullable="false" />
-          <Property Name="usuario_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="usuario_identificacion" Type="varchar" MaxLength="200" />
+          <Property Name="usuario_nombre" Type="varchar" MaxLength="200" />
+          <Property Name="usuario_clave" Type="varchar" MaxLength="200" />
+          <Property Name="usuario_email" Type="varchar" MaxLength="200" />
         </EntityType>
         <Association Name="FK_comercio">
-          <End Role="comercios" Type="Self.comercios" Multiplicity="1" />
+          <End Role="comercios" Type="Self.comercios" Multiplicity="0..1" />
           <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="comercios">
@@ -67,7 +69,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_estado">
-          <End Role="estados" Type="Self.estados" Multiplicity="1" />
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
           <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="estados">
@@ -79,7 +81,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_mediopago">
-          <End Role="medios_pago" Type="Self.medios_pago" Multiplicity="1" />
+          <End Role="medios_pago" Type="Self.medios_pago" Multiplicity="0..1" />
           <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="medios_pago">
@@ -91,7 +93,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_usuario">
-          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="0..1" />
           <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="usuarios">
@@ -125,8 +127,7 @@
             <End Role="transacciones" EntitySet="transacciones" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PruebaTecnicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -135,19 +136,20 @@
             <PropertyRef Name="id_comercio" />
           </Key>
           <Property Name="id_comercio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="comercio_codigo" Type="Int32" Nullable="false" />
-          <Property Name="comercio_nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="comercio_nit" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="comercio_direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="comercio_codigo" Type="Int32" />
+          <Property Name="comercio_nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="comercio_nit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="comercio_direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="transacciones" Relationship="Self.FK_comercio" FromRole="comercios" ToRole="transacciones" />
+          <Property Name="comercio_clave" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="estado">
           <Key>
             <PropertyRef Name="id_estado" />
           </Key>
           <Property Name="id_estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="estado_codigo" Type="Int16" Nullable="false" />
-          <Property Name="estado_nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="estado_codigo" Type="Int16" />
+          <Property Name="estado_nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="transacciones" Relationship="Self.FK_estado" FromRole="estados" ToRole="transacciones" />
         </EntityType>
         <EntityType Name="medios_pago">
@@ -155,8 +157,8 @@
             <PropertyRef Name="id_pago" />
           </Key>
           <Property Name="id_pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pago_codigo" Type="Int16" Nullable="false" />
-          <Property Name="pago_nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pago_codigo" Type="Int16" />
+          <Property Name="pago_nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="transacciones" Relationship="Self.FK_mediopago" FromRole="medios_pago" ToRole="transacciones" />
         </EntityType>
         <EntityType Name="transaccion">
@@ -164,13 +166,14 @@
             <PropertyRef Name="id_trans" />
           </Key>
           <Property Name="id_trans" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="trans_codigo" Type="Int32" Nullable="false" />
-          <Property Name="trans_medio_pago" Type="Int32" Nullable="false" />
-          <Property Name="trans_estado" Type="Int32" Nullable="false" />
-          <Property Name="trans_comercio" Type="Int32" Nullable="false" />
-          <Property Name="trans_usuario" Type="Int32" Nullable="false" />
-          <Property Name="trans_total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="trans_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="trans_codigo" Type="Int32" />
+          <Property Name="trans_medio_pago" Type="Int32" />
+          <Property Name="trans_estado" Type="Int32" />
+          <Property Name="trans_comercio" Type="Int32" />
+          <Property Name="trans_usuario" Type="Int32" />
+          <Property Name="trans_total" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="trans_fecha" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="trans_concepto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="comercio" Relationship="Self.FK_comercio" FromRole="transacciones" ToRole="comercios" />
           <NavigationProperty Name="estado" Relationship="Self.FK_estado" FromRole="transacciones" ToRole="estados" />
           <NavigationProperty Name="medios_pago" Relationship="Self.FK_mediopago" FromRole="transacciones" ToRole="medios_pago" />
@@ -181,14 +184,14 @@
             <PropertyRef Name="id_Usuario" />
           </Key>
           <Property Name="id_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="usuario_identificacion" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="usuario_nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="usuario_clave" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="usuario_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usuario_identificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_clave" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="transacciones" Relationship="Self.FK_usuario" FromRole="usuarios" ToRole="transacciones" />
         </EntityType>
         <Association Name="FK_comercio">
-          <End Role="comercios" Type="Self.comercio" Multiplicity="1" />
+          <End Role="comercios" Type="Self.comercio" Multiplicity="0..1" />
           <End Role="transacciones" Type="PruebaTecnicaModel.transaccion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="comercios">
@@ -200,7 +203,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_estado">
-          <End Role="estados" Type="Self.estado" Multiplicity="1" />
+          <End Role="estados" Type="Self.estado" Multiplicity="0..1" />
           <End Role="transacciones" Type="PruebaTecnicaModel.transaccion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="estados">
@@ -212,7 +215,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_mediopago">
-          <End Role="medios_pago" Type="Self.medios_pago" Multiplicity="1" />
+          <End Role="medios_pago" Type="Self.medios_pago" Multiplicity="0..1" />
           <End Role="transacciones" Type="PruebaTecnicaModel.transaccion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="medios_pago">
@@ -224,7 +227,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_usuario">
-          <End Role="usuarios" Type="Self.usuario" Multiplicity="1" />
+          <End Role="usuarios" Type="Self.usuario" Multiplicity="0..1" />
           <End Role="transacciones" Type="PruebaTecnicaModel.transaccion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="usuarios">
@@ -267,6 +270,7 @@
           <EntitySetMapping Name="comercios">
             <EntityTypeMapping TypeName="PruebaTecnicaModel.comercio">
               <MappingFragment StoreEntitySet="comercios">
+                <ScalarProperty Name="comercio_clave" ColumnName="comercio_clave" />
                 <ScalarProperty Name="id_comercio" ColumnName="id_comercio" />
                 <ScalarProperty Name="comercio_codigo" ColumnName="comercio_codigo" />
                 <ScalarProperty Name="comercio_nombre" ColumnName="comercio_nombre" />
@@ -304,6 +308,7 @@
                 <ScalarProperty Name="trans_usuario" ColumnName="trans_usuario" />
                 <ScalarProperty Name="trans_total" ColumnName="trans_total" />
                 <ScalarProperty Name="trans_fecha" ColumnName="trans_fecha" />
+                <ScalarProperty Name="trans_concepto" ColumnName="trans_concepto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

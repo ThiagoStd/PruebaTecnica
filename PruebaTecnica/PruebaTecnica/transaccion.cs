@@ -15,13 +15,14 @@ namespace PruebaTecnica
     public partial class transaccion
     {
         public int id_trans { get; set; }
-        public int trans_codigo { get; set; }
-        public int trans_medio_pago { get; set; }
-        public int trans_estado { get; set; }
-        public int trans_comercio { get; set; }
-        public int trans_usuario { get; set; }
-        public decimal trans_total { get; set; }
-        public System.DateTime trans_fecha { get; set; }
+        public Nullable<int> trans_codigo { get; set; }
+        public Nullable<int> trans_medio_pago { get; set; }
+        public Nullable<int> trans_estado { get; set; }
+        public Nullable<int> trans_comercio { get; set; }
+        public Nullable<int> trans_usuario { get; set; }
+        public Nullable<decimal> trans_total { get; set; }
+        public string trans_fecha { get; set; }
+        public string trans_concepto { get; set; }
     
         public virtual comercio comercio { get; set; }
         public virtual estado estado { get; set; }
